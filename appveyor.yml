@@ -1,0 +1,28 @@
+---
+version: 1.0.{build}
+
+image:
+  - Visual Studio 2019
+
+platform:
+  - x64
+
+configuration:
+  - Debug
+  - Release
+
+install:
+  - set PATH=%PYTHON%/Scripts/;%PATH%
+  - pip.exe install conan --upgrade
+  - conan user
+  - mkdir build
+  - cd build
+
+build_script:
+  - set PATH=%PYTHON%/Scripts/;%PATH%
+  - conan install .. --settings build_type=%CONFIGURATION% --build=missing
+  - cmake ../ -G "Visual Studio 16 2019" -A x64
+  - cmake --build . --config %CONFIGURATION%  -- -verbosity:minimal
+
+test_script:
+  - ctest -C %CONFIGURATION%

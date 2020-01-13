@@ -1,0 +1,19 @@
+dist: bionic
+sudo: false
+language: cpp
+
+compiler:
+  - gcc
+
+install:
+  # Install conan
+  - pip install --user --upgrade conan
+  # Automatic detection of your arch, compiler, etc.
+  - conan user && conan config set compiler.libcxx=libstdc++11
+
+script:
+  - mkdir build && cd build
+  - conan install ../ --build=missing -s compiler.libcxx=libstdc++11
+  - cmake ..
+  - cmake --build .
+  - ctest
