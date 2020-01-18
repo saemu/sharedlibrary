@@ -9,6 +9,6 @@ target_sources( demo
                 PRIVATE main.cpp SharedLibrary.cpp SharedLibrary.hpp )
 
 target_link_libraries( demo
-                       PRIVATE Boost::boost Boost::filesystem )
+                       PRIVATE Boost::boost Boost::filesystem ${CMAKE_DL_LIBS} )
 
 target_compile_features( demo PUBLIC cxx_std_17 )
